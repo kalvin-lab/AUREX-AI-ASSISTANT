@@ -1,0 +1,50 @@
+# ════════════════════════════════════════════════════════════════
+# AUREX — AI Assistant Requirements
+# All packages use FREE tiers / open-source licenses
+# Python 3.10+ required
+# ════════════════════════════════════════════════════════════════
+
+# ── Core Telegram Bot ──────────────────────────────────────────
+python-telegram-bot[job-queue]>=21.5
+
+# ── Google Gemini LLM (Free Tier: 15 req/min, 1M tokens/day) ──
+google-generativeai>=0.8.3
+
+# ── Browser Automation (Headless Chrome/Firefox) ──────────────
+playwright>=1.44.0
+
+# ── Text-to-Speech (FREE, High Quality, Microsoft Edge Neural) ─
+edge-tts>=6.1.12
+
+# ── Text-to-Speech Fallback (gTTS via Google Translate API) ───
+gTTS>=2.5.3
+
+# ── Audio processing (ogg/mp3 conversion) ─────────────────────
+pydub>=0.25.1
+
+# ── Async file I/O ─────────────────────────────────────────────
+aiofiles>=24.1.0
+
+# ── HTTP client for async requests ────────────────────────────
+aiohttp>=3.10.5
+
+# ── HTML parsing for web scraping ─────────────────────────────
+beautifulsoup4>=4.12.3
+
+# ── Sync HTTP requests (lightweight utilities) ────────────────
+requests>=2.32.3
+
+# ── Environment variable management ──────────────────────────
+python-dotenv>=1.0.1
+
+# ── Data handling ─────────────────────────────────────────────
+# sqlite3 is built into Python — no extra install needed
+
+# ── Logging utilities ─────────────────────────────────────────
+colorlog>=6.8.2
+
+# ════════════════════════════════════════════════════════════════
+# AFTER pip install -r requirements.txt, also run:
+#   playwright install chromium
+#   playwright install-deps chromium
+# ════════════════════════════════════════════════════════════════
