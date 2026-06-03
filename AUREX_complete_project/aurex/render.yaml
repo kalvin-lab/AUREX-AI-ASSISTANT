@@ -1,0 +1,57 @@
+# ════════════════════════════════════════════════════════════════
+# AUREX — render.yaml
+# Infrastructure-as-Code for Render.com free deployment
+# 
+# Deploy steps:
+#   1. Push code to GitHub
+#   2. Go to https://render.com → New → Blueprint
+#   3. Connect your GitHub repo
+#   4. Render auto-detects this file and deploys
+# ════════════════════════════════════════════════════════════════
+
+services:
+  - type: web                    # Web service (has health check endpoint)
+    name: aurex-ai-assistant
+    runtime: docker              # Use our Dockerfile
+    
+    # ── Free tier config ──────────────────────────────────────
+    plan: free                   # FREE tier: 512MB RAM, shared CPU
+    region: oregon               # US West (low latency)
+    
+    # ── Build & deploy settings ──────────────────────────────
+    dockerfilePath: ./Dockerfile
+    
+    # ── Environment variables (set secrets in Render dashboard)
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false              # Set this manually in Render dashboard (secret)
+      
+      - key: GEMINI_API_KEY
+        sync: false              # Set this manually in Render dashboard (secret)
+      
+      - key: PORT
+        value: 8080             # Render will set this automatically too
+      
+      - key: AUDIO_RESPONSE
+        value: "true"
+      
+      - key: LOG_LEVEL
+        value: "INFO"
+      
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    
+    # ── Health check (keeps free tier from sleeping) ──────────
+    healthCheckPath: /health
+    
+    # ── Auto-deploy on git push ───────────────────────────────
+    autoDeploy: true
+
+    # ── Disk for persistent SQLite database ──────────────────
+    # NOTE: On free tier, disk is ephemeral (resets on redeploy)
+    # For persistence, consider SQLite → JSON export workaround
+    # or upgrade to paid disk ($1/month for 1GB)
+    disk:
+      name: aurex-data
+      mountPath: /app
+      sizeGB: 1
